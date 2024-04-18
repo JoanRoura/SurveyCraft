@@ -1,1 +1,177 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+th {
+  text-align: left;
+  padding: 1rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-width: 0 0 1px 0;
+  font-weight: 700;
+  color: #374151;
+  background: #f9fafb;
+  transition: box-shadow 0.2s;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: #E1E1E1;
+  overflow-y: auto;
+}
+
+.body {
+  width: 100%;
+  max-width: 330px;
+  margin: auto;
+  padding: 15px;
+  text-align: center;
+}
+
+.logo {
+  width: 100px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #dfe7ef;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+}
+
+.titleSection {
+  font-size: 17.5px;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #111827;
+}
+
+
+/* Styles Module Admin */
+
+.layout-sidebar {
+  position: fixed;
+  width: 300px;
+  height: calc(100vh - 9rem);
+  z-index: 999;
+  overflow-y: auto;
+  user-select: none;
+  top: 7rem;
+  left: 2rem;
+  background-color: var(--surface-overlay);
+  border-radius: 20;
+  padding: 0.5rem 1.5rem;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, .02), 0px 0px 2px rgba(0, 0, 0, .05), 0px 1px 4px rgba(0, 0, 0, .08);
+}
+
+.layout-main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+  padding: 7rem 2rem 2rem 4rem;
+  transition: margin-left;
+}
+
+.layout-main {
+  flex: 1 1 auto;
+}
+
+@media (min-width: 992px) {
+  .layout-wrapper.layout-overlay .layout-main-container {
+    margin-left: 0;
+    padding-left: 2rem;
+  }
+
+  .layout-wrapper.layout-overlay .layout-sidebar {
+    transform: translateX(-100%);
+    left: 0;
+    top: 0;
+    height: 100vh;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .layout-wrapper.layout-overlay.layout-overlay-active .layout-sidebar {
+    transform: translateX(0);
+  }
+
+  .layout-wrapper.layout-static .layout-main-container {
+    margin-left: 300px;
+  }
+
+  .layout-wrapper.layout-static.layout-static-inactive .layout-sidebar {
+    transform: translateX(-100%);
+    left: 0;
+  }
+
+  .layout-wrapper.layout-static.layout-static-inactive .layout-main-container {
+    margin-left: 0;
+    padding-left: 2rem;
+  }
+
+  .layout-wrapper .layout-mask {
+    display: none;
+  }
+}
+
+@media (max-width: 991px) {
+  .blocked-scroll {
+    overflow: hidden;
+  }
+
+  .layout-wrapper .layout-main-container {
+    margin-left: 0;
+    padding-left: 2rem;
+  }
+
+  .layout-wrapper .layout-sidebar {
+    transform: translateX(-100%);
+    left: 0;
+    top: 0;
+    height: 100vh;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .layout-wrapper .layout-mask {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 998;
+    width: 100%;
+    height: 100%;
+  }
+
+  .layout-wrapper.layout-mobile-active .layout-sidebar {
+    transform: translateX(0);
+  }
+
+  .layout-wrapper.layout-mobile-active .layout-mask {
+    display: block;
+  }
+}

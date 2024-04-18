@@ -1,0 +1,45 @@
+<div class="h-full align-items-center flex justify-content-center lg:px-8 md:px-6 px-4 py-6 surface-ground ng-star-inserted">
+  <div *ngIf="!loading" class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+    <div class="text-center mb-5">
+      <img src="../../../../assets/images/SurveyCraft-Logo.png" alt="Image" height="60" class="mb-3">
+      <div class="text-900 text-3xl font-medium mb-3">SurveyCraft</div>
+
+      <span class="text-600 font-medium line-height-3">Don't have an account?</span>
+      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" routerLink="/auth/register">Create today!</a>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+      <div class="flex flex-column gap-2 mb-3">
+        <label for="email" class="block text-900 font-medium">Email</label>
+        <input id="email" pInputText formControlName="email" type="text" [class]="getClassCSS('email')"
+          class="w-full" placeholder="name@example.com">
+        <small *ngIf="invalidCamp('email')" class="text-red-500">
+          {{ emailErrorMsg }}
+        </small>
+      </div>
+
+      <div class="flex flex-column gap-2 mb-5">
+        <label for="password" class="block text-900 font-medium">Password</label>
+        <input id="password" pInputText formControlName="password" type="password" [class]="getClassCSS('password')"
+          class="w-full" placeholder="Password">
+        <small *ngIf="invalidCamp('password')" class="text-red-500">
+          {{ passwordErrorMsg }}
+        </small>
+      </div>
+
+      <!-- <div class="flex align-items-center justify-content-between mb-6">
+        <div class="flex align-items-center">
+          <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
+          <label for="rememberme1">Remember me</label>
+        </div>
+
+        <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
+      </div> -->
+
+      <button pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
+    </form>
+  </div>
+
+  <p-progressSpinner *ngIf="loading"></p-progressSpinner>
+</div>

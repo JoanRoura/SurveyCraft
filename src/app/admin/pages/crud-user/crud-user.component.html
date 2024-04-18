@@ -1,0 +1,161 @@
+<div class="grid mt-8 bg-grey mt-crud pt-5 px-5">
+  <div class="col-12">
+      <div class="card px-6 py-6">
+          <p-toast></p-toast>
+          <p-toolbar styleClass="mb-4">
+              <ng-template pTemplate="left">
+                  <div class="my-2">
+                      <button pButton
+                              pRipple
+                              label="New"
+                              icon="pi pi-plus"
+                              class="p-button-success mr-2"
+                              (click)="openNew()">
+                      </button>
+
+                      <button pButton
+                              pRipple
+                              label="Delete"
+                              icon="pi pi-trash"
+                              class="p-button-danger"
+                              (click)="deleteSelectedUsers()"
+                              [disabled]="!selectedUsers || !selectedUsers.length">
+                      </button>
+                  </div>
+              </ng-template>
+
+              <ng-template pTemplate="right">
+                  <!-- <p-fileUpload mode="basic"
+                                accept="image/*"
+                                [maxFileSize]="1000000"
+                                label="Import"
+                                chooseLabel="Import"
+                                class="mr-2 inline-block">
+                  </p-fileUpload> -->
+                  <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+              </ng-template>
+          </p-toolbar>
+
+          <p-table #dt [value]="users" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedUsers" selectionMode="multiple" [rowHover]="true" [loading]="loadingUsers" dataKey="id">
+              <ng-template pTemplate="caption">
+                  <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                      <h5 class="m-0 titleSection">Manage Users</h5>
+                      <span class="block mt-2 md:mt-0 p-input-icon-left">
+                          <i class="pi pi-search"></i>
+                          <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                      </span>
+                  </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th style="width: 3rem">
+                          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                      </th>
+                      <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
+                      <th pSortableColumn="name">Name<p-sortIcon field="name"></p-sortIcon></th>
+                      <th pSortableColumn="email">Email<p-sortIcon field="email"></p-sortIcon></th>
+                      <th pSortableColumn="password">Password<p-sortIcon field="password"></p-sortIcon></th>
+                      <th pSortableColumn="city">City<p-sortIcon field="city"></p-sortIcon></th>
+                      <th></th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-user>
+                  <tr>
+                      <td>
+                          <p-tableCheckbox [value]="user"></p-tableCheckbox>
+                      </td>
+                      <td style="width:14%; min-width:10rem;"><span class="p-column-title">ID</span>
+                          {{user.id}}
+                      </td>
+                      <td style="width:14%; min-width:10rem;">
+                          <span class="p-column-title">Name</span>
+                          {{user.name}}
+                      </td>
+                      <td style="width:14%; min-width:10rem;">
+                          <span class="p-column-title">Email</span>
+                          {{user.email}}
+                      </td>
+                      <td style="width:14%; min-width:10rem;">
+                          <span class="p-column-title">Password</span>
+                          {{user.password}}
+                      </td>
+                      <td style="width:14%; min-width:10rem;">
+                          <span class="p-column-title">"City</span>
+                          {{user.city}}
+                      </td>
+                      <td>
+                          <div class="flex">
+                              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editUser(user)"></button>
+                              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteUser(user)"></button>
+                          </div>
+                      </td>
+                  </tr>
+              </ng-template>
+          </p-table>
+      </div>
+
+      <p-dialog [(visible)]="userDialog" [style]="{width: '450px'}" header="User Details" [modal]="true" class="p-fluid">
+          <ng-template pTemplate="content">
+              <!-- <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="product.image"> -->
+              <div class="field">
+                  <label for="id">Id</label>
+                  <input disabled="true" type="text" pInputText id="id" [(ngModel)]="user.id" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.id}"/>
+                  <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.id">Id is required.</small>
+              </div>
+
+              <div class="formgrid grid">
+                  <div class="field col">
+                      <label for="name">Name</label>
+                      <input type="text" pInputText id="name" [(ngModel)]="user.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.name}"/>
+                      <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.name">Name is required.</small>
+                  </div>
+
+                  <div class="field col">
+                      <label for="email">Email</label>
+                      <input type="email" pInputText id="email" [(ngModel)]="user.email" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.email}"/>
+                      <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.name">Email is required.</small>
+                  </div>
+              </div>
+
+              <div class="field">
+                  <label for="password">Password</label>
+                  <input type="password" pInputText id="password" [(ngModel)]="user.password" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.password}"/>
+                  <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.name">Password is required.</small>
+              </div>
+
+              <div class="field">
+                  <label for="city">City</label>
+                  <input type="text" pInputText id="city" [(ngModel)]="user.city" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.city}"/>
+                  <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.name">City is required.</small>
+              </div>
+          </ng-template>
+
+          <ng-template pTemplate="footer">
+              <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+              <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveUser()"></button>
+          </ng-template>
+      </p-dialog>
+
+      <p-dialog [(visible)]="deleteUserDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+          <div class="flex align-items-center justify-content-center">
+              <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+              <span *ngIf="user">Are you sure you want to delete <b>{{user.name}}</b>?</span>
+          </div>
+          <ng-template pTemplate="footer">
+              <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteUserDialog = false"></button>
+              <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+          </ng-template>
+      </p-dialog>
+
+      <p-dialog [(visible)]="deleteUsersDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+          <div class="flex align-items-center justify-content-center">
+              <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+              <span>Are you sure you want to delete selected users?</span>
+          </div>
+          <ng-template pTemplate="footer">
+              <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteUsersDialog = false"></button>
+              <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+          </ng-template>
+      </p-dialog>
+  </div>
+</div>

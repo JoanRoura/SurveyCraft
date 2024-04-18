@@ -1,0 +1,20 @@
+<div class="layout-topbar">
+  <img src="../../../../assets/images/SurveyCraft-Logo.png" height="60" alt="Imagen corporativa de T-Versus">
+
+  <span class="pl-3 text-2xl">SurveyCraft</span>
+
+  <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="sharedService.showProfileSidebar()">
+      <i class="pi pi-ellipsis-v"></i>
+  </button>
+
+  <div #topbarmenu class="layout-topbar-menu">
+      <button class="p-link layout-topbar-button" (click)="logout()">
+          <i class="pi pi-sign-out"></i>
+          <span>Logout</span>
+      </button>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
+
+

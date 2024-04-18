@@ -1,0 +1,50 @@
+<p-toast></p-toast>
+
+<form [formGroup]="surveyForm" (ngSubmit)="submitSurvey()">
+  <div class="mt-8 p-4">
+    <div class="col-12">
+      <div class="card">
+        <h5 class="titleSection mt-0 mb-4">{{ survey.descr }}</h5>
+
+        <div class="p-fluid p-formgrid grid">
+          <ng-container *ngFor="let question of questions">
+            <div class="field col-12 md:col-6">
+              <div class="question-wrapper">
+                <label [for]="'question_' + question.id" class="mb-3">{{ question.question }}</label>
+
+                <ng-container [ngSwitch]="question.idQuestionType">
+                  <input *ngSwitchCase="1" pInputText [id]="'question_' + question.id" type="text" formControlName="{{ question.id }}" class="mt-3" />
+
+                  <div *ngSwitchCase="2" class="mt-3">
+                    <div class="radio-option" class="mb-1">
+                      <input type="radio" [id]="'question_' + question.id + '_yes'" formControlName="{{ question.id }}" value="true" />
+                      <label [for]="'question_' + question.id + '_yes'">Sí</label>
+                    </div>
+
+                    <div class="radio-option">
+                      <input type="radio" [id]="'question_' + question.id + '_no'" formControlName="{{ question.id }}" value="false" />
+                      <label [for]="'question_' + question.id + '_no'">No</label>
+                    </div>
+                  </div>
+
+                  <div *ngSwitchCase="3" class="mt-3">
+                    <p-dropdown [options]="dropdownItems[question.id!]" [(ngModel)]="selectedOption[question.id!]" [style]="{ 'width': '100%' }"></p-dropdown>
+                  </div>
+
+                  <div *ngSwitchCase="4" class="mt-3">
+                    <p-slider [style]="{ 'width': '100%' }" (onSlideEnd)="updateSliderValue(question.id!, $event.value!)"></p-slider>
+                    <div class="mt-3">{{ surveyForm.controls[question.id!.toString()].value }} anys</div>
+                </div>
+
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <button pButton type="submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+
